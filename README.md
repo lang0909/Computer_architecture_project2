@@ -40,47 +40,44 @@ make clean
 ## 기능 설명
 
 - **States**
-    - The emulator must maintain the system states, which consist of the necessary register set (R0-R31,
-PC) and the memory. The register and memory must be created when the emulation begins.
+    - emulator는 필요한 register set(R0~R31, PC)와 메모리로 구성된 시스템 상태를 유지한다.
+    - emulation이 시작될 때 레지스터와 메모리가 생성 된다.
 
 - **Loading an input binary**
-    - For a given input binary, the loader must identify the text and data section sizes. The text section must
-be loaded to the emulated memory from the address 0x400000. The data section must be loaded to
-the emulated memory from the address 0x10000000. In this project, the simple loader does not create
-the stack region.
+    - input으로 주어진 binary의 경우 로더는 text와 data section 크기를 확인한다.
+    - text section은 주소 0x400000에서 emulation된 메모리로 로드 된다.
+    - data section은 주소 0x10000000에서 emulation된 메모리로 로드 된다.
+    - 이 프로젝트에서 로더는 stack 영역을 생성하지 않는다.
 
 - **Initial states**
-    - PC : The initial value of PC is 0x400000.
-    - Registers : All values of register0 to 31 are set to zero.
-    - Memory : You may assume all initial values are zero, except for the loaded text and data sections.
+    - PC : PC의 초기 값은 0x400000 이다.
+    - Registers : 모든 레지스터의 초기값은 0으로 설정 된다.
+    - Memory : 로드된 text와 data section을 제외하고 모든 초기 값이 0이라고 가정할 수 있다.
 
 - **Instructio execution**
-    - With the current PC, 4B from the memory is read. The emulator must parse the binary instruction and
-identify what the instruction is and what are the operands. Based on the MIPS ISA, the emulator must
-accurately mimic the execution, which will update either a PC, register, or memory.
+    - 현재 PC(program counter)에서는 메모리로부터 4byte를 읽는다.
+    - emulator는 binary로 된 instruction을 분석하여 operator가 무엇이고 operand는 무엇인지 식별한다.
+    - MIPS ISA를 기반으로 이 emulator는 PC, 레지스터, 메모리를 업데이트하는 실행방식을 정확하게 모방한다.
 
 - **Supported instruction set**
 
-이미지
+![instruction_set](./images/instruction_set.JPG)
 
 
 ### 출력예시
 
-- If you type the command line as below, the output file should show only PC and register values
-like Figure 1.
+- 아래와 같은 command line을 입력하게 되면 output file은 Figure 1과 같은 PC와 register 값을 보여준다.
 
 ```bash
 ./sce212sim –n 0 input.o
 ```
 
-- If you type the command line as below, the output file should show memory contents of specific
-memory region, PC and register values like Figure 2.
+- 아래와 같은 command line을 입력하게 되면 output file은 Figure 2와 같은 특정 메모리 지역의 메모리 내용, PC, register의 값을 보여준다.
 
 ```bash
 ./sce212sim –m 0x400000:0x400010 –n 0 input.o
 ```
 
-- The functions for printing the memory and register values are provided in the util.c, and
-util.h files.
+- 메모리와 레지스터의 값을 print해주는 기능은 util.c 와 util.h 파일에서 제공된다.
 
-이미지
+![instruction_set](./images/output_example.JPG)
